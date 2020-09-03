@@ -13,10 +13,15 @@ try {
 	$coverageDirectoryTestResults="$coverageDirectory\TestResults"
 	$coverageReportDirectory="$coverageDirectory\report"
 	$fullFwTestsDll="$projectDirectory\test\ProjectTemplate.Tests.NetFramework\bin\Debug\ProjectTemplate.Tests.NetFramework.dll"
+	$nugetExe="$projectDirectory\build\nuget.exe"
 		
 	"Build XPlat solution"
 	
 	dotnet build "$projectDirectory\src\ProjectTemplate.sln"
+	
+	"Restore FullFw solution"
+	
+	& $nugetExe restore "$projectDirectory\src\ProjectTemplate.NetFramework.sln"
 	
 	"Build FullFw solution"
 	
@@ -30,9 +35,17 @@ try {
 	
 	Get-ChildItem $coverageDirectoryTestResults -Filter "*coverage.cobertura.xml" -Recurse | ForEach {$coverageInput = $coverageInput + "`"" + $_.Directory + "\" + $_ + "`" ";}
 	
+	"Restore FullFw tests solution"
+	
+	& $nugetExe restore "$projectDirectory\test\ProjectTemplate.Tests.NetFramework.sln"
+	
+	"Build FullFw tests solution"	
+	
+	dotnet build "$projectDirectory\test\ProjectTemplate.Tests.NetFramework.sln"
+	
 	"Run and calculate cover of FullFw tests"
 	
-	try {
+	try {	
 		Push-Location $coverageDirectory
 		& $openCoverExe -register:user -target:$dotnetExe -targetargs:"test $fullFwTestsDll" -output:coverage.opencover.xml -filter:"+[*]* -[*.Tests*]*"
 		& $reportGeneratorExe "-reports:$coverageInput;coverage.opencover.xml" "-targetdir:$coverageReportDirectory"
