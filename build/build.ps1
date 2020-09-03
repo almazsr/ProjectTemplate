@@ -10,7 +10,7 @@ try {
 	$altCoverExe="$nugetPackagesDirectory\altcover\7.1.782\tools\net45\AltCover.exe"	
 	$dotnetExe="C:\Program Files\dotnet\dotnet.exe"
 	$coverageDirectory="$projectDirectory\coverage"
-	$coverageDirectoryTestResults="$coverageDirectory\TestResults"
+	$coverageDirectoryXPlat="$coverageDirectory\xplat"
 	$coverageReportDirectory="$coverageDirectory\report"
 	$fullFwTestsDll="$projectDirectory\test\ProjectTemplate.Tests.NetFramework\bin\Debug\ProjectTemplate.Tests.NetFramework.dll"
 	$nugetExe="$projectDirectory\build\nuget.exe"
@@ -29,11 +29,13 @@ try {
 
 	"Run and calculate cover of XPlat tests"
 	
-	Remove-Item $coverageDirectoryTestResults -Recurse
+	if (Test-Path $coverageDirectoryXPlat) {
+		Remove-Item $coverageDirectoryXPlat -Recurse
+	}
 	
-	dotnet test "$projectDirectory\test\ProjectTemplate.Tests" --collect:"XPlat Code Coverage" -r $coverageDirectoryTestResults
+	dotnet test "$projectDirectory\test\ProjectTemplate.Tests" --collect:"XPlat Code Coverage" -r $coverageDirectoryXPlat
 	
-	Get-ChildItem $coverageDirectoryTestResults -Filter "*coverage.cobertura.xml" -Recurse | ForEach {$coverageInput = $coverageInput + "`"" + $_.Directory + "\" + $_ + "`" ";}
+	Get-ChildItem $coverageDirectoryXPlat -Filter "*coverage.cobertura.xml" -Recurse | ForEach {$coverageInput = $coverageInput + "`"" + $_.Directory + "\" + $_ + "`" ";}
 	
 	"Restore FullFw tests solution"
 	
@@ -47,8 +49,8 @@ try {
 	
 	try {	
 		Push-Location $coverageDirectory
-		& $openCoverExe -register:user -target:$dotnetExe -targetargs:"test $fullFwTestsDll" -output:coverage.opencover.xml -filter:"+[*]* -[*.Tests*]*"
-		& $reportGeneratorExe "-reports:$coverageInput;coverage.opencover.xml" "-targetdir:$coverageReportDirectory"
+		& $openCoverExe -register:user -target:$dotnetExe -targetargs:"test $fullFwTestsDll" -output:fullfw.coverage.xml -filter:"+[*]* -[*.Tests*]*"
+		& $reportGeneratorExe "-reports:$coverageInput;fullfw.coverage.xml" "-targetdir:$coverageReportDirectory"
 	}
 	finally {
 		Pop-Location
