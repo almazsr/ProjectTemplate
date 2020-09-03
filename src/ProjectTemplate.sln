@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectTemplate.App.Console
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectTemplate", "ProjectTemplate\ProjectTemplate.csproj", "{498AF0F3-E26F-487F-920B-DE3689B82F0B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{82894E61-6D2E-4CF4-8582-C5BB065146DE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectTemplate.Tests", "..\test\ProjectTemplate.Tests\ProjectTemplate.Tests.csproj", "{E16D5C40-034F-4700-9AA2-EB584F1FE17B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,16 +21,9 @@ Global
 		{498AF0F3-E26F-487F-920B-DE3689B82F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498AF0F3-E26F-487F-920B-DE3689B82F0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498AF0F3-E26F-487F-920B-DE3689B82F0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E16D5C40-034F-4700-9AA2-EB584F1FE17B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E16D5C40-034F-4700-9AA2-EB584F1FE17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E16D5C40-034F-4700-9AA2-EB584F1FE17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E16D5C40-034F-4700-9AA2-EB584F1FE17B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E16D5C40-034F-4700-9AA2-EB584F1FE17B} = {82894E61-6D2E-4CF4-8582-C5BB065146DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1139F8DE-8507-457D-A47E-A13ACA87FEDA}
